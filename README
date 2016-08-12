@@ -1,0 +1,28 @@
+This is a simple QML application which tracks an RSS feed pictures from it
+in full screen.
+
+The feed is refreshed every 10 minutes. Images are cached on disk. You must
+ensure the disk cache is large enough for the whole feed, otherwise images
+will be reloaded every time the currently displayed image changes. The cache
+size is set in main.cpp.
+
+You may also interact using left and right swipes and by pressing the left
+and right arrow keys.
+
+Usage:
+
+qmlrss <rss feed url>
+
+for example:
+
+qmlrss http://imgur.com/r/earthporn/rss
+qmlrss http://feeds.bbci.co.uk/news/rss.xml
+
+Compiling:
+
+qmake && make
+
+
+See also:
+
+https://github.com/ali1234/qmlimgur - similar program for Imgur albums.
