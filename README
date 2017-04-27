@@ -15,7 +15,6 @@ qmlrss <rss feed url>
 
 for example:
 
-qmlrss http://imgur.com/r/earthporn/rss
 qmlrss http://feeds.bbci.co.uk/news/rss.xml
 
 Compiling:
