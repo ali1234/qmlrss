@@ -1,7 +1,7 @@
 TEMPLATE = app
 
 QT += quick qml xml xmlpatterns
-SOURCES = main.cpp
+SOURCES = main.cpp netlink.cpp
 RESOURCES += qmlrss.qrc
 
 OTHER_FILES = *.qml

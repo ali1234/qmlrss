@@ -1,0 +1,4 @@
+*.o
+qrc_*
+Makefile
+qmlrss

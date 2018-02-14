@@ -12,9 +12,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkDiskCache>
 #include <QQmlEngine>
+#include <QQmlContext>
 #include <QQmlNetworkAccessManagerFactory>
 #include <QtQuick/QQuickView>
 
+#include "netlink.h"
 
 // The QML only keeps previous, current, and next images from the slidehsow.
 // To prevent it from reloading the images every time the slideshow advances
@@ -47,6 +49,11 @@ int main(int argc, char **argv)
 {
     QGuiApplication app(argc, argv);
     QQuickView view;
+    Netlink nl;
+
+    // Connect the netlink device so that the QML will wait for
+    // a network connection before running.
+    view.engine()->rootContext()->setContextProperty("nl", &nl);
     view.engine()->setNetworkAccessManagerFactory(new MyNetworkAccessManagerFactory);
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setSource(QUrl("qrc:///main.qml"));
