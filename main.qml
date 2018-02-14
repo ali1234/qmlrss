@@ -143,6 +143,8 @@ Rectangle {
         pv.onMovementStarted();
         pv.onMovementEnded();
     }
+
+    Component.onCompleted: nl.start();
 }
 
 
