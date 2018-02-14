@@ -16,7 +16,7 @@ Rectangle {
     color: "black"
     width: 800
     height: 480
-    
+
     PathView {
         id: pv
         anchors.fill: parent
@@ -127,6 +127,8 @@ Rectangle {
             manualtimer.restart()
         } 
     }
+
+    StaticClock {}
 
     // Keyboard input. You can also swipe to go forwards/backwards.
 
