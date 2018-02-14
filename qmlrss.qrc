@@ -2,5 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>StaticClock.qml</file>
+        <file>NewsDelegate.qml</file>
+        <file>NewsSlider.qml</file>
+        <file>StyledText.qml</file>
+        <file>MergedXmlListModel.qml</file>
     </qresource>
 </RCC>

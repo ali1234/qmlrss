@@ -15,15 +15,13 @@ Rectangle {
         anchors.left: parent.horizontalCenter
         anchors.leftMargin: 10
 
-        Text {
-            color: "white"
+        StyledText {
             id: time
             anchors.horizontalCenter: parent.horizontalCenter
             font.bold: true; font.pixelSize: 34
         }
 
-        Text {
-            color: "white"
+        StyledText {
             id: date
             anchors.horizontalCenter: parent.horizontalCenter
             font.bold: true; font.pixelSize: 14
