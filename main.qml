@@ -96,7 +96,8 @@ Rectangle {
 
         // Timer to reload the album after 10 minutes.
         Timer {
-            interval: 600000; running: true; repeat: true;
+            id: modeltimer
+            interval: 600000; running: false; repeat: true;
             onTriggered: parent.model.reload()
         }
 
@@ -126,6 +127,15 @@ Rectangle {
         onMovementEnded: {
             manualtimer.restart()
         } 
+
+        Connections {
+            target: nl
+            onFinished: {
+                pv.model.reload();
+                modeltimer.start();
+            }
+        }
+
     }
 
     StaticClock {}
