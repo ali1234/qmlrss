@@ -4,6 +4,9 @@
         <file>qml/FeedModel.qml</file>
         <file>qml/FeedDelegate.qml</file>
         <file>qml/FeedSlider.qml</file>
+        <file>qml/Slider.qml</file>
+        <file>qml/SliderPathH.qml</file>
+        <file>qml/SliderPathV.qml</file>
         <file>qml/StaticClock.qml</file>
         <file>qml/StyledText.qml</file>
     </qresource>

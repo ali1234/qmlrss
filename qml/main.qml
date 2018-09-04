@@ -7,26 +7,13 @@ Rectangle {
     width: 800
     height: 480
 
-    PathView{
-
+    Slider{
         id: vs
-
         anchors.fill: parent
-
-        highlightRangeMode: PathView.StrictlyEnforceRange
-        preferredHighlightBegin: 0.5
-        preferredHighlightEnd: 0.5
-        highlightMoveDuration: 600
-        snapMode: PathView.SnapOneItem
-
-        pathItemCount: 3 // only show previous, current, next
-
-        path: Path { // vertical
-            startX: width/2; startY: -height
-            PathLine{x: width/2; y: height*2}
-        }
-
+        path: SliderPathV {}
         model: ObjectModel {
+            FeedSlider {}
+            FeedSlider {}
             FeedSlider {}
         }
     }

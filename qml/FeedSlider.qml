@@ -1,25 +1,11 @@
 import QtQuick 2.2
 
-PathView {
+Slider {
     id: newsslider
     width: parent.width
     height: parent.height
-    //model: MergedXmlListModel{}
-
-    highlightRangeMode: PathView.StrictlyEnforceRange
-    preferredHighlightBegin: 0.5
-    preferredHighlightEnd: 0.5
-    highlightMoveDuration: 600
-    snapMode: PathView.SnapOneItem
-
+    path: SliderPathH {}
     delegate: FeedDelegate {}
-
-    pathItemCount: 3 // only show previous, current, next
-
-    path: Path { // horizontal
-        startX: -width; startY: height/2
-        PathLine{x: width*2; y: height/2}
-    }
 
     Timer {
         id: modeltimer
