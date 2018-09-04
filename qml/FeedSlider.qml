@@ -12,7 +12,7 @@ PathView {
     highlightMoveDuration: 600
     snapMode: PathView.SnapOneItem
 
-    delegate: NewsDelegate {}
+    delegate: FeedDelegate {}
 
     pathItemCount: 3 // only show previous, current, next
 
@@ -66,7 +66,7 @@ PathView {
         target: nl
         onFinished: {
             console.log("going to load model now");
-            newsslider.model = Qt.createComponent("MergedXmlListModel.qml").createObject(newsslider);
+            newsslider.model = Qt.createComponent("FeedModel.qml").createObject(newsslider);
             modeltimer.start();
         }
     }

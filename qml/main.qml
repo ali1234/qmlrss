@@ -27,7 +27,7 @@ Rectangle {
         }
 
         model: ObjectModel {
-            NewsSlider {}
+            FeedSlider {}
         }
     }
 
