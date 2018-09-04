@@ -1,5 +1,5 @@
 import QtQuick 2.2
-
+import QtQml.Models 2.1
 
 Rectangle {
     id: window
@@ -7,22 +7,52 @@ Rectangle {
     width: 800
     height: 480
 
-    NewsSlider{ id: ns }
+    PathView{
+
+        id: vs
+
+        anchors.fill: parent
+
+        highlightRangeMode: PathView.StrictlyEnforceRange
+        preferredHighlightBegin: 0.5
+        preferredHighlightEnd: 0.5
+        highlightMoveDuration: 600
+        snapMode: PathView.SnapOneItem
+
+        pathItemCount: 3 // only show previous, current, next
+
+        path: Path { // vertical
+            startX: width/2; startY: -height
+            PathLine{x: width/2; y: height*2}
+        }
+
+        model: ObjectModel {
+            NewsSlider {}
+        }
+    }
 
     StaticClock{}
 
     focus: true
 
     Keys.onLeftPressed: {
-        ns.incrementCurrentIndex();
-        ns.onMovementStarted();
-        ns.onMovementEnded();
+        vs.currentItem.onLeft();
     }
 
     Keys.onRightPressed: {
-        ns.decrementCurrentIndex();
-        ns.onMovementStarted();
-        ns.onMovementEnded();
+        vs.currentItem.onRight();
+    }
+
+    Keys.onUpPressed: {
+        vs.incrementCurrentIndex();
+        vs.onMovementStarted();
+        vs.onMovementEnded();
+    }
+
+    Keys.onDownPressed: {
+        vs.decrementCurrentIndex();
+        vs.onMovementStarted();
+        vs.onMovementEnded();
     }
 
     Keys.onPressed: {

@@ -2,7 +2,8 @@ import QtQuick 2.2
 
 PathView {
     id: newsslider
-    anchors.fill: parent
+    width: parent.width
+    height: parent.height
     //model: MergedXmlListModel{}
 
     highlightRangeMode: PathView.StrictlyEnforceRange
@@ -19,12 +20,6 @@ PathView {
         startX: -width; startY: height/2
         PathLine{x: width*2; y: height/2}
     }
-/*
-    path: Path { // vertical
-        startX: width/2; startY: -height
-        PathLine{x: width/2; y: height*2}
-    }
-*/
 
     Timer {
         id: modeltimer
@@ -54,6 +49,18 @@ PathView {
     onMovementEnded: {
         manualtimer.restart()
     } 
+
+    function onLeft() {
+        vs.currentItem.incrementCurrentIndex();
+        vs.currentItem.onMovementStarted();
+        vs.currentItem.onMovementEnded();
+    }
+
+    function onRight() {
+        vs.currentItem.decrementCurrentIndex();
+        vs.currentItem.onMovementStarted();
+        vs.currentItem.onMovementEnded();
+    }
 
     Connections {
         target: nl
