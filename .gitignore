@@ -2,3 +2,4 @@
 qrc_*
 Makefile
 qmlrss
+.qmake.stash
