@@ -57,6 +57,7 @@ int main(int argc, char **argv)
     view.engine()->setNetworkAccessManagerFactory(new MyNetworkAccessManagerFactory);
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setSource(QUrl("qrc:///qml/main.qml"));
+    QObject::connect(view.engine(), SIGNAL(quit()), &app, SLOT(quit()));
     view.show();
 
     return app.exec();
