@@ -56,7 +56,7 @@ int main(int argc, char **argv)
     view.engine()->rootContext()->setContextProperty("nl", &nl);
     view.engine()->setNetworkAccessManagerFactory(new MyNetworkAccessManagerFactory);
     view.setResizeMode(QQuickView::SizeRootObjectToView);
-    view.setSource(QUrl("qrc:///main.qml"));
+    view.setSource(QUrl("qrc:///qml/main.qml"));
     view.show();
 
     return app.exec();

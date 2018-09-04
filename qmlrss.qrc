@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>StaticClock.qml</file>
-        <file>NewsDelegate.qml</file>
-        <file>NewsSlider.qml</file>
-        <file>StyledText.qml</file>
-        <file>MergedXmlListModel.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/StaticClock.qml</file>
+        <file>qml/NewsDelegate.qml</file>
+        <file>qml/NewsSlider.qml</file>
+        <file>qml/StyledText.qml</file>
+        <file>qml/MergedXmlListModel.qml</file>
     </qresource>
 </RCC>
