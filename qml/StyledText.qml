@@ -1,5 +1,6 @@
 import QtQuick 2.2
 
+
 Text {
     color: "white"
     //font.family: "Helvetica"

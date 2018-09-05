@@ -1,5 +1,6 @@
 import QtQuick 2.2
- 
+
+
 Rectangle {
     color: "#6F000000"
     width: 260

@@ -1,5 +1,8 @@
 import QtQuick 2.2
 
+import "../.."
+
+
 Image {
 
     width: PathView.view.width

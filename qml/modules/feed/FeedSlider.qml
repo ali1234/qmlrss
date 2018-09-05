@@ -1,5 +1,8 @@
 import QtQuick 2.2
 
+import "../../slider"
+
+
 Slider {
     id: newsslider
     width: parent.width
