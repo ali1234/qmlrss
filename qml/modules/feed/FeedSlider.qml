@@ -54,7 +54,7 @@ Slider {
     Connections {
         target: nl
         onFinished: {
-            console.log("going to load model now");
+            console.log("going to load FeedModel now");
             newsslider.model = Qt.createComponent("FeedModel.qml").createObject(newsslider);
             modeltimer.start();
         }
