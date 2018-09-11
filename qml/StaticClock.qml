@@ -7,14 +7,14 @@ Rectangle {
     height: 148
     radius: 15
     anchors.verticalCenter: parent.top
-    anchors.horizontalCenter: parent.left
+    anchors.horizontalCenter: parent.right
 
     Column {
 
         anchors.top: parent.verticalCenter
         anchors.topMargin: 4
-        anchors.left: parent.horizontalCenter
-        anchors.leftMargin: 10
+        anchors.right: parent.horizontalCenter
+        anchors.rightMargin: 10
 
         StyledText {
             id: time
