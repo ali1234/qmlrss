@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
+        <file>qml/modules/feed/BBCListModel.qml</file>
         <file>qml/modules/feed/FeedModel.qml</file>
         <file>qml/modules/feed/FeedDelegate.qml</file>
         <file>qml/modules/feed/FeedSlider.qml</file>

@@ -13,10 +13,30 @@ ListModel {
         guid: ""
     }
 
+    property var feeds: []
+
     property var slider
     property bool please_delete_last_item: false
 
     function netup() {
+        var sources = "news/technology:news/business";
+
+        if (Qt.application.arguments[1] !== undefined) {
+            sources = Qt.application.arguments[1];
+        }
+        sources = sources.split(":");
+
+        var component = Qt.createComponent("BBCListModel.qml");
+
+        for (i=0; i<sources.length; i++) {
+            var object = component.createObject(null, {
+                "source": "https://feeds.bbci.co.uk/" + sources[i] + "/rss.xml",
+            });
+            object.onStatusChanged.connect(rebuildList);
+
+            feeds.push(object);
+        }
+
         for (var i = 0; i < feeds.length; i++) {
             if (feeds[i].status === XmlListModel.Error || feeds[i].status === XmlListModel.Null) {
                 feeds[i].reload();
@@ -92,39 +112,5 @@ ListModel {
             slider.positionViewAtIndex(position, PathView.Center);
         }
     }
-
-    property list<XmlListModel> feeds: [
-        XmlListModel {
-                source: "https://feeds.bbci.co.uk/news/world/africa/rss.xml"
-                query: "/rss/channel/item"
-                namespaceDeclarations: "declare namespace media = 'http://search.yahoo.com/mrss/';"
-                XmlRole { name: "title"; query: "title/string()" }
-                // Remove any links from the description
-                XmlRole { name: "description"; query: "fn:replace(description/string(), '\&lt;a href=.*\/a\&gt;', '')" }
-                XmlRole { name: "image"; query: "media:thumbnail/@url/string()" }
-                XmlRole { name: "link"; query: "link/string()" }
-                XmlRole { name: "pubDate"; query: "pubDate/string()" }
-                XmlRole { name: "guid"; query: "guid/string()" }
-                onStatusChanged: {
-                    rebuildList();
-                }
-        },
-
-        XmlListModel {
-                source: "https://feeds.bbci.co.uk/news/business/rss.xml"
-                query: "/rss/channel/item"
-                namespaceDeclarations: "declare namespace media = 'http://search.yahoo.com/mrss/';"
-                XmlRole { name: "title"; query: "title/string()" }
-                // Remove any links from the description
-                XmlRole { name: "description"; query: "fn:replace(description/string(), '\&lt;a href=.*\/a\&gt;', '')" }
-                XmlRole { name: "image"; query: "media:thumbnail/@url/string()" }
-                XmlRole { name: "link"; query: "link/string()" }
-                XmlRole { name: "pubDate"; query: "pubDate/string()" }
-                XmlRole { name: "guid"; query: "guid/string()" }
-                onStatusChanged: {
-                    rebuildList();
-                }
-        }
-    ]
 
 }
