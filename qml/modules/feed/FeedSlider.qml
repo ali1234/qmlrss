@@ -9,6 +9,7 @@ Slider {
     height: parent.height
     path: SliderPathH {}
     delegate: FeedDelegate {}
+    model: FeedModel {slider: newsslider}
 
     Timer {
         id: modeltimer
@@ -20,6 +21,10 @@ Slider {
         id: autotimer
         interval: 10000; running: true; repeat: true;
         onTriggered: {
+            if (model.please_delete_last_item && currentIndex != (count-1)) {
+                model.remove(model.count-1, 1);
+                model.please_delete_last_item = false
+            }
             incrementCurrentIndex()
         }
     }
@@ -40,22 +45,21 @@ Slider {
     } 
 
     function onLeft() {
-        vs.currentItem.incrementCurrentIndex();
-        vs.currentItem.onMovementStarted();
-        vs.currentItem.onMovementEnded();
+        incrementCurrentIndex();
+        onMovementStarted();
+        onMovementEnded();
     }
 
     function onRight() {
-        vs.currentItem.decrementCurrentIndex();
-        vs.currentItem.onMovementStarted();
-        vs.currentItem.onMovementEnded();
+        decrementCurrentIndex();
+        onMovementStarted();
+        onMovementEnded();
     }
 
     Connections {
         target: nl
         onFinished: {
-            console.log("going to load FeedModel now");
-            newsslider.model = Qt.createComponent("FeedModel.qml").createObject(newsslider);
+            model.netup();
             modeltimer.start();
         }
     }
