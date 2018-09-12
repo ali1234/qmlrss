@@ -1,8 +1,10 @@
 import QtQuick 2.2
-import QtQml.Models 2.1
+import QtQml.Models 2.3
 
 import "slider"
 import "modules/feed"
+import "modules/music"
+import "modules/travel"
 
 
 Rectangle {
@@ -16,10 +18,11 @@ Rectangle {
         anchors.fill: parent
         path: SliderPathV {}
         model: ObjectModel {
+            Music {}
             FeedSlider {}
-            FeedSlider {}
-            FeedSlider {}
+            TravelSlider {}
         }
+        currentIndex: 1
     }
 
     StaticClock{}
