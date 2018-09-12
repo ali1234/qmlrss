@@ -18,7 +18,7 @@ ListModel {
     property var slider
     property bool please_delete_last_item: false
 
-    function netup() {
+    function init() {
         var sources = "news/technology:news/business";
 
         if (Qt.application.arguments[1] !== undefined) {

@@ -59,7 +59,7 @@ Slider {
     Connections {
         target: nl
         onFinished: {
-            model.netup();
+            model.init();
             modeltimer.start();
         }
     }
