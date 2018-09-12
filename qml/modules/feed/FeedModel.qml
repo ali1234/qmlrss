@@ -7,7 +7,7 @@ ListModel {
     ListElement {
         title: "Loading feeds..."
         description: ""
-        image: "qrc:///loading.jpg"
+        image: "qrc:///loading.png"
         link: ""
         pubDate: ""
         guid: ""

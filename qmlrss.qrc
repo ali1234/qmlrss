@@ -4,10 +4,14 @@
         <file>qml/modules/feed/FeedModel.qml</file>
         <file>qml/modules/feed/FeedDelegate.qml</file>
         <file>qml/modules/feed/FeedSlider.qml</file>
+        <file>qml/modules/travel/TravelModel.qml</file>
+        <file>qml/modules/travel/TravelSlider.qml</file>
+        <file>qml/modules/travel/Stop.qml</file>
         <file>qml/slider/Slider.qml</file>
         <file>qml/slider/SliderPathH.qml</file>
         <file>qml/slider/SliderPathV.qml</file>
         <file>qml/StaticClock.qml</file>
         <file>qml/StyledText.qml</file>
+        <file>loading.png</file>
     </qresource>
 </RCC>
