@@ -75,7 +75,7 @@ ListModel {
         }
 
         // sort new list
-        newitems.sort(function(a, b) {return a.pubDate > b.pubDate;});
+        newitems.sort(function(a, b) {return a.pubDate - b.pubDate;});
 
         // update later
         Qt.callLater(updateListModel, newitems);
