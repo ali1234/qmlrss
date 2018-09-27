@@ -6,10 +6,13 @@
         <file>qml/modules/feed/FeedDelegate.qml</file>
         <file>qml/modules/feed/FeedSlider.qml</file>
         <file>qml/modules/music/Music.qml</file>
+        <file>qml/modules/travel/Constants.js</file>
         <file>qml/modules/travel/TravelModel.qml</file>
         <file>qml/modules/travel/TravelSlider.qml</file>
         <file>qml/modules/travel/Stop.qml</file>
-        <file>qml/modules/travel/ArrivalDelegate.qml</file>
+        <file>qml/modules/travel/Mode.qml</file>
+        <file>qml/modules/travel/StyledDelegate.qml</file>
+        <file>qml/modules/travel/StyledList.qml</file>
         <file>qml/slider/Slider.qml</file>
         <file>qml/slider/SliderPathH.qml</file>
         <file>qml/slider/SliderPathV.qml</file>

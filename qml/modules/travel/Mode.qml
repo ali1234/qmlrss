@@ -11,7 +11,6 @@ Rectangle {
 
     color: "white"
 
-    property string stopid
     property var modes: []
     property var lineids: []
 
@@ -19,55 +18,17 @@ Rectangle {
     ListModel {id: arrivals}
 
     function init() {
-        var xhr = new XMLHttpRequest;
-        xhr.open("GET", "https://api.tfl.gov.uk/stoppoint/" + stopid);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE)
-                parseStop(xhr.responseText);
-        }
-        xhr.send();
-
-    }
-
-    function parseStop(json) {
-        if ( json === "" ) return;
-        var stop = JSON.parse(json);
-        titleText.text = stop["commonName"];
-        lineids = []
-        for (var x in stop["lines"]) {
-            lineids.push(stop["lines"][x]["id"])
-        }
-        descriptionText.text = lineids.join(", ").toUpperCase()
         reload();
     }
 
     function reload() {
-        // reload arrivals and line status
-        var xhr = new XMLHttpRequest;
-        xhr.open("GET", "https://api.tfl.gov.uk/stoppoint/" + stopid + "/arrivals");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE)
-                parseArrivals(xhr.responseText);
-        }
-        xhr.send();
-
         var xhrl = new XMLHttpRequest;
-        xhrl.open("GET", "https://api.tfl.gov.uk/line/" + lineids.join(',') + "/status");
+        xhrl.open("GET", "https://api.tfl.gov.uk/line/mode/" + modes.join(',') + "/status");
         xhrl.onreadystatechange = function() {
             if (xhrl.readyState == XMLHttpRequest.DONE)
                 parseLines(xhrl.responseText);
         }
         xhrl.send();
-    }
-
-    function parseArrivals(json) {
-        if ( json == "" ) return;
-        var arr = JSON.parse(json);
-        arrivals.clear();
-        arr.sort(function(a, b) {return a.timeToStation - b.timeToStation;});
-        for (var i = 0; i < arr.length; i++) {
-            arrivals.append(arr[i]);
-        }
     }
 
     function parseLines(json) {
@@ -107,23 +68,11 @@ Rectangle {
             Text {
                 color: "white"
                 id: titleText
-                text: "title"
+                text: "Network Status"
                 width: parent.width
                 wrapMode: Text.WordWrap
                 font.pixelSize: 18
                 font.bold: true
-            }
-
-            Text {
-                color: "white"
-                id: descriptionText
-
-                text: stopid
-                width: parent.width
-                wrapMode: Text.WordWrap
-                font.pixelSize: 14
-                textFormat: Text.StyledText
-                horizontalAlignment: Qt.AlignLeft
             }
 
         }
@@ -152,14 +101,7 @@ Rectangle {
         Rectangle {
             width: parent.width / 2
             height: parent.height
-            StyledList {
-                model: arrivals
-                delegate: StyledDelegate {
-                    leftText: destinationName
-                    rightText: Math.ceil(timeToStation/60) + " mins"
-                }
-                headerText: "Arrivals"
-            }
+
         }
     }
 }

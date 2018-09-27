@@ -3,9 +3,10 @@ import QtQml.Models 2.3
 
 ObjectModel {
 
-    Stop {stopid: "910GFORESTH"; modes: ["overground", "tube"]} // forest hill station
+    Mode {modes: ["tube", "dlr", "overground"]}
+    Stop {stopid: "910GFORESTH"; modes: ["overground", "national-rail"]} // forest hill station
     Stop {stopid: "490006920W"; modes: ["bus"]} // bus stop
-    Stop {stopid: "490004733C"; modes: ["overground", "national-rail"]} // canada water hub
+    Stop {stopid: "490004733C"; modes: ["overground", "tube"]} // canada water hub
 
     function init() {
         for (var i = 0; i < count; i++) {
