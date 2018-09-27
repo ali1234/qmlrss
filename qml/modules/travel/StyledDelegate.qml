@@ -1,10 +1,10 @@
-import QtQuick 2.2
+import QtQuick 2.6
 
 
 Rectangle {
 
     width: parent.width
-    height: 24
+    height: childrenRect.height
 
     property var colours: ["yellow", "black"]
     property var leftText: ""
@@ -14,9 +14,7 @@ Rectangle {
 
     Text {
         color: colours[0]
-        anchors.left: parent.left
-        anchors.leftMargin: 6
-        anchors.verticalCenter: parent.verticalCenter
+        padding: 3
         text: leftText
         font.pixelSize: 15
     }
@@ -24,8 +22,7 @@ Rectangle {
     Text {
         color: colours[0]
         anchors.right: parent.right
-        anchors.rightMargin: 6
-        anchors.verticalCenter: parent.verticalCenter
+        padding: 3
         text: rightText
         horizontalAlignment: Qt.AlignRight
         font.pixelSize: 15

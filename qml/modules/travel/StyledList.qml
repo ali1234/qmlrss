@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.6
 
 ListView {
     anchors.fill: parent
@@ -15,12 +15,13 @@ ListView {
     property var footerText: ""
 
     header: Rectangle {
-        height: 40
+        height: childrenRect.height
         Text {
-            anchors.verticalCenter: parent.verticalCenter
             z: 100
             text: headerText
             font.pixelSize: 18
+            padding: 5
+            leftPadding: 0
         }
     }
 }

@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.6
 
 import "../.."
 
@@ -15,7 +15,7 @@ Rectangle {
     property var lineids: []
 
     ListModel {id: lines}
-    ListModel {id: arrivals}
+    ListModel {id: disruption}
 
     function init() {
         reload();
@@ -35,15 +35,23 @@ Rectangle {
         if ( json == "" ) return;
         var arr = JSON.parse(json);
         lines.clear();
+        disruption.clear();
         for (var i = 0; i < arr.length; i++) {
-            console.log(modes + " " + arr[i].modeName);
             if (modes.indexOf(arr[i].modeName) > -1) {
                 lines.append({
-                    id:arr[i].id,
-                    name:arr[i].name,
-                    mode:arr[i].modeName,
+                    id: arr[i].id,
+                    name: arr[i].name,
+                    mode: arr[i].modeName,
                     status: arr[i].lineStatuses[0].statusSeverityDescription
                 });
+                if (arr[i].lineStatuses[0].disruption !== undefined) {
+                    disruption.append({
+                        id: arr[i].id,
+                        name: arr[i].name,
+                        mode: arr[i].modeName,
+                        description: arr[i].lineStatuses[0].disruption.description
+                    })
+                }
             }
         }
     }
@@ -101,6 +109,36 @@ Rectangle {
         Rectangle {
             width: parent.width / 2
             height: parent.height
+            StyledList {
+                spacing: 12
+                model: disruption
+                delegate: Column {
+                    width: parent.width
+                    height: childrenRect.height
+                    property var colours: Constants.get_colours(id, mode)
+
+                    Rectangle {
+                        color: colours[1]
+                        width: parent.width
+                        height: childrenRect.height
+                        Text {
+                            color: colours[0]
+                            text: name
+                            font.pixelSize: 15
+                            padding: 3
+                        }
+                    }
+
+                    Text {
+                        width: parent.width
+                        text: description
+                        font.pixelSize: 12
+                        wrapMode: Text.WordWrap
+                        topPadding: 5
+                    }
+                }
+                headerText: "Disruptions"
+            }
 
         }
     }

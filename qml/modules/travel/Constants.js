@@ -10,6 +10,7 @@ var line_colours ={
     'piccadilly': ['#ffffff', '#0019a8'],
     'victoria': ['#000000', '#0099cc'],
     'waterloo-city': ['#000000', '#66cccc'],
+    'southern': ['#ffffff', '#003e2d'],
 }
 
 var mode_colours = {
@@ -21,7 +22,7 @@ var mode_colours = {
 }
 
 function get_colours(id, mode) {
-    if (mode == "tube") {
+    if (mode == "tube" || mode == "national-rail") {
         return line_colours[id];
     } else {
         return mode_colours[mode];

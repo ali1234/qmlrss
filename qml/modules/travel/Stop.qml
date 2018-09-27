@@ -75,7 +75,6 @@ Rectangle {
         var arr = JSON.parse(json);
         lines.clear();
         for (var i = 0; i < arr.length; i++) {
-            console.log(modes + " " + arr[i].modeName);
             if (modes.indexOf(arr[i].modeName) > -1) {
                 lines.append({
                     id:arr[i].id,
