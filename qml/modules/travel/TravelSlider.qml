@@ -55,6 +55,7 @@ Slider {
         target: nl
         onFinished: {
             model.init();
+            modeltimer.start();
         }
     }
 }
