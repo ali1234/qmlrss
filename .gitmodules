@@ -1,0 +1,3 @@
+[submodule "QtUPnP"]
+	path = QtUPnP
+	url = https://github.com/ptstream/QtUPnP

@@ -1,8 +1,6 @@
-TEMPLATE = app
+TEMPLATE = subdirs
 
-QT += quick qml xml xmlpatterns
-SOURCES = main.cpp netlink.cpp
-RESOURCES += qmlrss.qrc
+SUBDIRS += app QtUPnP/upnp
 
-target.path = /usr/bin
-INSTALLS += target
+app.file = app.pro
+app.depends = QtUPnP/upnp
