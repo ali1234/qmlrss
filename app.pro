@@ -3,7 +3,8 @@ TEMPLATE = app
 TARGET = qmlrss
 
 QT += quick qml xml xmlpatterns
-SOURCES = main.cpp netlink.cpp
+SOURCES = main.cpp netlink.cpp upnp.cpp
+HEADERS = upnp.h
 RESOURCES += qmlrss.qrc
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/QtUPnP/upnp/release/ -lqtupnp
