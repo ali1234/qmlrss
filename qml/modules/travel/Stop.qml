@@ -14,6 +14,7 @@ Rectangle {
     property string stopid
     property var modes: []
     property var lineids: []
+    property var now: Date.now()
 
     ListModel {id: lines}
     ListModel {id: arrivals}
@@ -65,7 +66,9 @@ Rectangle {
         var arr = JSON.parse(json);
         arrivals.clear();
         arr.sort(function(a, b) {return a.timeToStation - b.timeToStation;});
+        now = Date.now();
         for (var i = 0; i < arr.length; i++) {
+            arr[i].eta = new Date(now + (arr[i].timeToStation*1000))
             arrivals.append(arr[i]);
         }
     }
@@ -84,6 +87,11 @@ Rectangle {
                 });
             }
         }
+    }
+
+    Timer {
+        interval: 10000; running: true; repeat: true;
+        onTriggered: now = Date.now();
     }
 
 
@@ -155,7 +163,7 @@ Rectangle {
                 model: arrivals
                 delegate: StyledDelegate {
                     leftText: destinationName
-                    rightText: Math.ceil(timeToStation/60) + " mins"
+                    rightText: Math.ceil((eta - now)/60000) + " mins"
                 }
                 headerText: "Arrivals"
             }
