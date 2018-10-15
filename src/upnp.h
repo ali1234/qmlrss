@@ -1,6 +1,6 @@
 #include <QObject>
-#include "QtUPnP/upnp/controlpoint.hpp"
-#include "QtUPnP/upnp/avcontrol.hpp"
+#include "upnp/controlpoint.hpp"
+#include "upnp/avcontrol.hpp"
 
 namespace QtUPnP
 {

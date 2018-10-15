@@ -1,9 +1,9 @@
 #include "upnp.h"
 
-#include "QtUPnP/upnp/avtransport.hpp"
-#include "QtUPnP/upnp/avcontrol.hpp"
-#include "QtUPnP/upnp/renderingcontrol.hpp"
-#include "QtUPnP/upnp/xmlhdidllite.hpp"
+#include "upnp/avtransport.hpp"
+#include "upnp/avcontrol.hpp"
+#include "upnp/renderingcontrol.hpp"
+#include "upnp/xmlhdidllite.hpp"
 
 USING_UPNP_NAMESPACE
 

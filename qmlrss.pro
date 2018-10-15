@@ -1,6 +1,14 @@
-TEMPLATE = subdirs
+TEMPLATE = app
 
-SUBDIRS += app QtUPnP/upnp
+TARGET = qmlrss
 
-app.file = app.pro
-app.depends = QtUPnP/upnp
+CONFIG += c++14
+QT += quick qml xml xmlpatterns network
+SOURCES += src/main.cpp src/netlink.cpp src/upnp.cpp
+HEADERS += src/upnp.h
+RESOURCES += qmlrss.qrc
+
+include(lib/upnp.pri)
+
+target.path = /usr/bin
+INSTALLS += target
