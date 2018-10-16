@@ -6,3 +6,4 @@ Makefile.*
 qmlrss
 .qmake.stash
 /.idea
+/build
