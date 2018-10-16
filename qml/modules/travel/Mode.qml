@@ -1,4 +1,6 @@
 import QtQuick 2.6
+import QSyncable 1.0
+import SortFilterProxyModel 0.2
 
 import "../.."
 
@@ -12,50 +14,43 @@ Rectangle {
     color: "white"
 
     property var modes: []
-    property var lineids: []
 
-    ListModel {id: lines}
-    ListModel {id: disruption}
+    // this works
+
+    AutoJsonListModel {
+        id: lines_inner
+        keyField: "id"
+        url: "https://api.tfl.gov.uk/line/mode/" + modes.join(',') + "/status"
+        interval: 300000
+    }
+
+    SortFilterProxyModel {
+        id: lines
+        sourceModel: lines_inner
+        sorters: [
+            StringSorter { roleName: "modeName"; sortOrder: Qt.DescendingOrder },
+            StringSorter { roleName: "name"; sortOrder: Qt.AscendingOrder }
+        ]
+    }
+
+    // this does not: "Cannot assign object to property"
+/*
+    SortFilterProxyModel {
+        id: lines
+        sourceModel: AutoJsonListModel {
+            url: "https://api.tfl.gov.uk/line/mode/" + modes.join(',') + "/status"
+            interval: 300000
+        }
+        sorters: [
+            StringSorter { roleName: "modeName"; sortOrder: Qt.DescendingOrder },
+            StringSorter { roleName: "name"; sortOrder: Qt.AscendingOrder }
+        ]
+    }
+*/
 
     function init() {
-        reload();
+        //reload();
     }
-
-    function reload() {
-        var xhrl = new XMLHttpRequest;
-        xhrl.open("GET", "https://api.tfl.gov.uk/line/mode/" + modes.join(',') + "/status");
-        xhrl.onreadystatechange = function() {
-            if (xhrl.readyState == XMLHttpRequest.DONE)
-                parseLines(xhrl.responseText);
-        }
-        xhrl.send();
-    }
-
-    function parseLines(json) {
-        if ( json == "" ) return;
-        var arr = JSON.parse(json);
-        lines.clear();
-        disruption.clear();
-        for (var i = 0; i < arr.length; i++) {
-            if (modes.indexOf(arr[i].modeName) > -1) {
-                lines.append({
-                    id: arr[i].id,
-                    name: arr[i].name,
-                    mode: arr[i].modeName,
-                    status: arr[i].lineStatuses[0].statusSeverityDescription
-                });
-                if (arr[i].lineStatuses[0].disruption !== undefined) {
-                    disruption.append({
-                        id: arr[i].id,
-                        name: arr[i].name,
-                        mode: arr[i].modeName,
-                        description: arr[i].lineStatuses[0].disruption.description
-                    })
-                }
-            }
-        }
-    }
-
 
     Rectangle {
         color: "#FF00007F"
@@ -98,9 +93,9 @@ Rectangle {
             StyledList {
                 model: lines
                 delegate: StyledDelegate {
-                    colours: Constants.get_colours(id, mode)
+                    colours: Constants.get_colours(id, modeName)
                     leftText: name
-                    rightText: status
+                    rightText: lineStatuses[0].statusSeverityDescription
                 }
                 headerText: "Lines"
             }
@@ -111,11 +106,17 @@ Rectangle {
             height: parent.height
             StyledList {
                 spacing: 12
-                model: disruption
-                delegate: Column {
+                model: SortFilterProxyModel {
+                    sourceModel: lines
+                    filters: [
+                        ExpressionFilter { expression: lineStatuses[0].disruption !== undefined }
+                    ]
+                }
+                delegate: Column
+                {
                     width: parent.width
                     height: childrenRect.height
-                    property var colours: Constants.get_colours(id, mode)
+                    property var colours: Constants.get_colours(id, modeName)
 
                     Rectangle {
                         color: colours[1]
@@ -131,7 +132,7 @@ Rectangle {
 
                     Text {
                         width: parent.width
-                        text: description
+                        text: lineStatuses[0].disruption.description
                         font.pixelSize: 12
                         wrapMode: Text.WordWrap
                         topPadding: 5

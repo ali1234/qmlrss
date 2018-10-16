@@ -16,6 +16,7 @@
         <file>qml/slider/Slider.qml</file>
         <file>qml/slider/SliderPathH.qml</file>
         <file>qml/slider/SliderPathV.qml</file>
+        <file>qml/AutoJsonListModel.qml</file>
         <file>qml/StaticClock.qml</file>
         <file>qml/StyledText.qml</file>
         <file>loading.png</file>

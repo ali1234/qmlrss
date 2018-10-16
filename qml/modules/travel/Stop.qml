@@ -1,4 +1,6 @@
 import QtQuick 2.4
+import QSyncable 1.0
+import SortFilterProxyModel 0.2
 
 import "../.."
 
@@ -16,84 +18,42 @@ Rectangle {
     property var lineids: []
     property var now: Date.now()
 
-    ListModel {id: lines}
-    ListModel {id: arrivals}
+    AutoJsonListModel {
+        id: lines
+        keyField: "id"
+        // url will be discovered later
+        interval: 300000
+    }
+
+    AutoJsonListModel {
+        id: arrivals
+        keyField: "id"
+        url: "https://api.tfl.gov.uk/stoppoint/" + stopid + "/arrivals"
+        interval: 120000
+    }
 
     function init() {
         var xhr = new XMLHttpRequest;
         xhr.open("GET", "https://api.tfl.gov.uk/stoppoint/" + stopid);
         xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE)
-                parseStop(xhr.responseText);
-        }
-        xhr.send();
-
-    }
-
-    function parseStop(json) {
-        if ( json === "" ) return;
-        var stop = JSON.parse(json);
-        titleText.text = stop["commonName"];
-        lineids = []
-        for (var x in stop["lines"]) {
-            lineids.push(stop["lines"][x]["id"])
-        }
-        descriptionText.text = lineids.join(", ").toUpperCase()
-        reload();
-    }
-
-    function reload() {
-        // reload arrivals and line status
-        var xhr = new XMLHttpRequest;
-        xhr.open("GET", "https://api.tfl.gov.uk/stoppoint/" + stopid + "/arrivals");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE)
-                parseArrivals(xhr.responseText);
-        }
-        xhr.send();
-
-        var xhrl = new XMLHttpRequest;
-        xhrl.open("GET", "https://api.tfl.gov.uk/line/" + lineids.join(',') + "/status");
-        xhrl.onreadystatechange = function() {
-            if (xhrl.readyState == XMLHttpRequest.DONE)
-                parseLines(xhrl.responseText);
-        }
-        xhrl.send();
-    }
-
-    function parseArrivals(json) {
-        if ( json == "" ) return;
-        var arr = JSON.parse(json);
-        arrivals.clear();
-        arr.sort(function(a, b) {return a.timeToStation - b.timeToStation;});
-        now = Date.now();
-        for (var i = 0; i < arr.length; i++) {
-            arr[i].eta = new Date(now + (arr[i].timeToStation*1000))
-            arrivals.append(arr[i]);
-        }
-    }
-
-    function parseLines(json) {
-        if ( json == "" ) return;
-        var arr = JSON.parse(json);
-        lines.clear();
-        for (var i = 0; i < arr.length; i++) {
-            if (modes.indexOf(arr[i].modeName) > -1) {
-                lines.append({
-                    id:arr[i].id,
-                    name:arr[i].name,
-                    mode:arr[i].modeName,
-                    status: arr[i].lineStatuses[0].statusSeverityDescription
-                });
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200 && xhr.responseText !== "") {
+                var stop = JSON.parse(xhr.responseText);
+                titleText.text = stop["commonName"];
+                lineids = []
+                for (var x in stop["lines"]) {
+                    lineids.push(stop["lines"][x]["id"])
+                }
+                descriptionText.text = lineids.join(", ").toUpperCase()
+                lines.url = "https://api.tfl.gov.uk/line/" + lineids.join(',') + "/status"
             }
         }
+        xhr.send();
     }
 
     Timer {
         interval: 10000; running: true; repeat: true;
         onTriggered: now = Date.now();
     }
-
 
     Rectangle {
         color: "#FF00007F"
@@ -146,11 +106,21 @@ Rectangle {
             width: parent.width / 2
             height: parent.height
             StyledList {
-                model: lines
-                delegate: StyledDelegate {
-                    colours: Constants.get_colours(id, mode)
+                model: SortFilterProxyModel {
+                    sourceModel: lines
+                    sorters: [
+                        StringSorter { roleName: "modeName"; sortOrder: Qt.DescendingOrder },
+                        StringSorter { roleName: "name"; sortOrder: Qt.AscendingOrder }
+                    ]
+                    filters: [
+                        ExpressionFilter { expression: modes.indexOf(modeName) > -1 }
+                    ]
+                }
+                delegate: StyledDelegate
+                {
+                    colours: Constants.get_colours(id, modeName)
                     leftText: name
-                    rightText: status
+                    rightText: lineStatuses[0].statusSeverityDescription
                 }
                 headerText: "Lines"
             }
@@ -160,10 +130,18 @@ Rectangle {
             width: parent.width / 2
             height: parent.height
             StyledList {
-                model: arrivals
+                model: SortFilterProxyModel {
+                    sourceModel: arrivals
+                    sorters: [
+                        StringSorter { roleName: "expectedArrival"; sortOrder: Qt.AscendingOrder }
+                    ]
+                    filters: [
+                        RangeFilter { roleName: "expectedArrival"; minimumValue: (new Date(now - 60000)).toISOString(); maximumValue: "Z" }
+                    ]
+                }
                 delegate: StyledDelegate {
                     leftText: destinationName
-                    rightText: Math.ceil((eta - now)/60000) + " mins"
+                    rightText: Math.max(0, Math.ceil((new Date(expectedArrival) - now)/60000)) + " mins"
                 }
                 headerText: "Arrivals"
             }
