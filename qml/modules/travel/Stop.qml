@@ -22,14 +22,14 @@ Rectangle {
         id: lines
         keyField: "id"
         // url will be discovered later
-        interval: 300000
+        reloadTime: 300000
     }
 
     AutoJsonListModel {
         id: arrivals
         keyField: "id"
         url: "https://api.tfl.gov.uk/stoppoint/" + stopid + "/arrivals"
-        interval: 120000
+        reloadTime: 120000
     }
 
     function init() {

@@ -11,12 +11,6 @@ Slider {
     model: TravelModel {}
 
     Timer {
-        id: modeltimer
-        interval: 600000; running: false; repeat: true;
-        onTriggered: model.reload()
-    }
-
-    Timer {
         id: autotimer
         interval: 10000; running: true; repeat: true;
         onTriggered: {
@@ -55,7 +49,6 @@ Slider {
         target: nl
         onFinished: {
             model.init();
-            modeltimer.start();
         }
     }
 }

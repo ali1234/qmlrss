@@ -13,12 +13,4 @@ ObjectModel {
             get(i).init();
         }
     }
-
-    function reload() {
-        console.log("Reload travel model");
-        for (var i = 0; i < count; i++) {
-            get(i).reload();
-        }
-    }
-
 }

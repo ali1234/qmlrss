@@ -3,7 +3,7 @@ import QSyncable 1.0
 
 JsonListModel {
     property var url
-    property var interval
+    property var reloadTime
 
     onUrlChanged: {
         if (reloadtimer.running) {
@@ -28,7 +28,7 @@ JsonListModel {
     }
 
     property var reloadtimer: Timer {
-        interval: interval
+        interval: reloadTime
         running: false; repeat: true; triggeredOnStart: true;
         onTriggered: reload()
     }

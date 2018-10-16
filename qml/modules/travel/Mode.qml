@@ -21,7 +21,7 @@ Rectangle {
         id: lines_inner
         keyField: "id"
         url: "https://api.tfl.gov.uk/line/mode/" + modes.join(',') + "/status"
-        interval: 300000
+        reloadTime: 300000
     }
 
     SortFilterProxyModel {
