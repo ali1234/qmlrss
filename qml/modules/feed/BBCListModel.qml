@@ -3,7 +3,8 @@ import QtQuick.XmlListModel 2.0
 
 
 XmlListModel {
-    source: "https://feeds.bbci.co.uk/news/world/africa/rss.xml"
+    property var topic
+    source: "https://feeds.bbci.co.uk/" + topic + "/rss.xml"
     query: "/rss/channel/item"
     namespaceDeclarations: "declare namespace media = 'http://search.yahoo.com/mrss/';"
     XmlRole { name: "title"; query: "title/string()" }

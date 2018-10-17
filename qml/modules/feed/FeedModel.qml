@@ -19,18 +19,18 @@ ListModel {
     property bool please_delete_last_item: false
 
     function init() {
-        var sources = "news/technology:news/business";
+        var topics = "news/technology:news/business";
 
         if (Qt.application.arguments[1] !== undefined) {
-            sources = Qt.application.arguments[1];
+            topics = Qt.application.arguments[1];
         }
-        sources = sources.split(":");
+        topics = topics.split(":");
 
         var component = Qt.createComponent("BBCListModel.qml");
 
-        for (i=0; i<sources.length; i++) {
+        for (i=0; i<topics.length; i++) {
             var object = component.createObject(null, {
-                "source": "https://feeds.bbci.co.uk/" + sources[i] + "/rss.xml",
+                "topic": topics[i],
             });
             object.onStatusChanged.connect(rebuildList);
 
